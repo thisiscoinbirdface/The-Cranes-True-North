@@ -6,7 +6,7 @@
   "name":"scribble_font_bake_outline_4dir",
   "parent":{
     "name":"Legacy",
-    "path":"folders/Extensions/Scribble/Legacy.yy",
+    "path":"folders/00 Extensions/Scribble/Legacy.yy",
   },
   "resourceType":"GMScript",
   "resourceVersion":"2.0",
