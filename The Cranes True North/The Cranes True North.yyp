@@ -1,6 +1,6 @@
 {
   "$GMProject":"v1",
-  "%Name":"TheCranesTrueNorth",
+  "%Name":"The Cranes True North",
   "AudioGroups":[
     {"$GMAudioGroup":"","%Name":"audiogroup_default","name":"audiogroup_default","resourceType":"GMAudioGroup","resourceVersion":"2.0","targets":-1,},
   ],
@@ -33,8 +33,9 @@
   "MetaData":{
     "IDEVersion":"2024.13.1.193",
   },
-  "name":"TheCranesTrueNorth",
+  "name":"The Cranes True North",
   "resources":[
+    {"id":{"name":"oTest","path":"objects/oTest/oTest.yy",},},
     {"id":{"name":"Room1","path":"rooms/Room1/Room1.yy",},},
   ],
   "resourceType":"GMProject",
