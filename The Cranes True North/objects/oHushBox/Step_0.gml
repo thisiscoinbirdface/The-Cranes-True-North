@@ -1,2 +1,0 @@
-GMLIVE_ENABLE
-

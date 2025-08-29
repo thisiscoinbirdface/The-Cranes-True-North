@@ -1,3 +1,0 @@
-//fuwafuwa
-fuwa_init()
-
