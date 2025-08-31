@@ -10,8 +10,8 @@
   "name":"oAct1",
   "overriddenProperties":[],
   "parent":{
-    "name":"Objects",
-    "path":"folders/Objects.yy",
+    "name":"12 Game",
+    "path":"folders/12 Game.yy",
   },
   "parentObjectId":null,
   "persistent":false,

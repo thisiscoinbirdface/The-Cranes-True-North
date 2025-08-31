@@ -25,8 +25,8 @@
   "nineSlice":null,
   "origin":0,
   "parent":{
-    "name":"Sprites",
-    "path":"folders/Sprites.yy",
+    "name":"99 Boss Battle",
+    "path":"folders/Sprites/99 Boss Battle.yy",
   },
   "preMultiplyAlpha":false,
   "resourceType":"GMSprite",
