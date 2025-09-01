@@ -1,27 +1,12 @@
 GMLIVE_ENABLE
 depth = LAYER_DEPTH_UI
 
-//dia box
-//options
-//left portrait
-//right portrait
-//left name
-//right name
-
-scene_array = 
-[
-	new _scene_struct("Cities lie; rain tells the truth in taps.", 1, "Kaia", sprite_mc),
-	new _scene_struct("Disperse. Return to halls.", 2, "Kaia", sprite_mc, "Megaphone"),
-	new _scene_struct("Civility with a baton.", 1, "Kaia", sprite_mc),
-	new _scene_struct("[slant]An injured student stumbles past, pressing a [rainbow]confiscated badge[/rainbow] into Kaia's palm.", 0, "Kaia", sprite_mc),
-	new _scene_struct("Hear that? The [rainbow]towers are singing[/rainbow] off-key.", 2, "Kaia", sprite_mc, "Nix", sprite_nix),
-	new _scene_struct("I hear budgets sing. Towers...that's new.", 1, "Kaia", sprite_mc, "Nix", sprite_nix),
-	new _scene_struct("Peace Office is sweeping the cafes. We should move.", 2, "Kaia", sprite_mc, "Juno", sprite_sera),
-	new _scene_struct("They're not my peace.", 1, "Kaia", sprite_mc, "Juno", sprite_sera),
-	new _scene_struct("They think [wave]you[/wave] are their paperwork.", 2, "Kaia", sprite_mc, "Juno", sprite_sera),
-]
 //restart
 if (keyboard_check_pressed(vk_shift)) {scene_current = 0}
+//inputs
+var _next_pressed = keyboard_check_pressed(vk_space) | mouse_check_button_pressed(mb_left)
+var _is_typing = typist.get_state() == 1 ? false : true
+
 
 //dialog array
 active_speaker = scene_array[scene_current].active_speaker
@@ -31,6 +16,9 @@ name_2 = scene_array[scene_current].name_2
 port_2 = scene_array[scene_current].port_2
 text = scene_array[scene_current].text
 entry_function = scene_array[scene_current].entry_func
+options_array = scene_array[scene_current].options_array
+options_next = scene_array[scene_current].options_next
+options_func = scene_array[scene_current].options_func
 
 #region dialog and portraits
 //left portrait
@@ -93,6 +81,38 @@ entry_function = scene_array[scene_current].entry_func
 var _next_pressed = keyboard_check_pressed(vk_space) | mouse_check_button_pressed(mb_left)
 var _is_typing = typist.get_state() == 1 ? false : true
 
+//Options
+var _options_array = options_array
+var _options_next = options_next
+var _options_func = options_func
+
+if (_options_array != noone) and !(_is_typing) and !(scene_enter){
+	//draw each option
+	var _l = array_length(_options_array)
+	var _optionsbox = dialog_menupoint
+	for (var i = 0; i < _l; i++){
+		var _x = RES_W/2
+		var _y = RES_H - sprite_get_height(_textbox) - 48 - i * (sprite_get_height(_optionsbox) + 16)		
+		var _xbox = _x - sprite_get_width(_optionsbox)/2
+		var _ybox = _y - sprite_get_height(_optionsbox)/2
+
+		//get mouse position
+		var _mouse_in_rect = point_in_rectangle(mouse_x, mouse_y, _xbox, _ybox, _xbox + sprite_get_width(_optionsbox), _ybox + sprite_get_height(_optionsbox))
+		
+		//draw box and option
+		var _col = _mouse_in_rect ? c_white : c_grey
+		draw_sprite(_optionsbox, 0, _xbox, _ybox)
+		scribble(_options_array[i]).starting_format("fLondon", _col).align(fa_middle, fa_center).draw(_x, _y)
+		
+		if (_next_pressed) and (_mouse_in_rect){
+			if (_options_func != noone) {_options_func[i]()}
+			if (_options_next != noone) {scene_increment(_options_next[i])}
+			else {scene_increment()}
+		}
+	}
+}
+warden_var(scene_array[scene_current].options_func)
+
 //scene entry function (after the text is done drawing)
 if (scene_enter == true) and !(_is_typing){	
 	if (entry_function != noone) {entry_function()}
@@ -102,8 +122,9 @@ if (scene_enter == true) and !(_is_typing){
 //skip typing
 if (_next_pressed) and (_is_typing) {typist.skip(true)}
 
-//next dialog
-if (_next_pressed) and !(_is_typing) {scene_increment()}
- 
+
+//next dialog if no options
+if (_next_pressed) and !(_is_typing) and (_options_array == noone) {scene_increment()}
+
 
 
