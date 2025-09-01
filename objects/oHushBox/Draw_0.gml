@@ -1,4 +1,4 @@
-//GMLIVE_ENABLE
+GMLIVE_ENABLE
 
 switch state
 {
@@ -9,7 +9,29 @@ switch state
 
 	case HUSH_STATE.Dialogue:
 	//GET ALL VARS
-			load_draw_vars()
+			cam_x = camera_get_view_x(view_camera[0])
+			cam_y = camera_get_view_y(view_camera[0])
+	
+			//Textbox vars
+			sprite_textbox = dialog_box
+			tx_w = RES_W
+			tx_h = sprite_get_height(sprite_textbox)
+			tx_x_top = cam_x + 256
+			tx_y_top = cam_y + RES_H - tx_h
+			hush_surf= new Canvas(tx_w, tx_h)
+
+			//Inner text vars
+			tx_inner_x_buff = 12
+			tx_inner_y_buff = 8
+			tx_inner_w = tx_w - (tx_inner_x_buff * 2)
+			tx_inner_h = tx_h - (tx_inner_y_buff * 2)
+
+			//Optionsbox vars
+			opt_w = RES_W * 0.4
+			opt_h = (font_size * options_max) + (tx_inner_y_buff * 2)
+			opt_x_top = cam_x + RES_W - opt_w
+			opt_y_top = cam_y + RES_H - tx_h - opt_h	
+			options_surf = new Canvas(opt_w, opt_h)
 			
 			//Check keyboard press
 			var _next_pressed = keyboard_check_pressed(vk_space)
@@ -36,7 +58,8 @@ switch state
 			hush_surf.Start()
 
 				//Draw textbox
-				draw_sprite_stretched(sprite_textbox, 0, 0, 0, tx_w, tx_h)
+				draw_sprite(dialog_box, 0, 0, 0)				
+	//			draw_sprite_stretched(sprite_textbox, 0, 0, 0, tx_w, tx_h)
 			
 				//Draw text
 				scribble(_text)
@@ -81,8 +104,11 @@ switch state
 			options_surf.Draw(opt_x_top, opt_y_top)
 			
 			//Cycle selected_option
-			if (global.input_down_pressed) {selected_option = list_wrap(selected_option - 1, _size - 1)}
-			if (global.input_up_pressed) {selected_option = list_wrap(selected_option + 1, _size - 1)}
+			var _input_down_pressed = keyboard_check_pressed(ord("S"))
+			var _input_up_pressed = keyboard_check_pressed(ord("W"))
+			
+			if (_input_down_pressed) {selected_option = list_wrap(selected_option - 1, _size - 1)}
+			if (_input_up_pressed) {selected_option = list_wrap(selected_option + 1, _size - 1)}
 			
 			//Act on selected option
 			if (_next_pressed){

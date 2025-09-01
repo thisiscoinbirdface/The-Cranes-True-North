@@ -2,7 +2,7 @@
 
 enable_disable()
 
-draw_set_font(m5x7)
+//draw_set_font(m5x7)
 	
 if (!enabled){
 	debug_array_clear()

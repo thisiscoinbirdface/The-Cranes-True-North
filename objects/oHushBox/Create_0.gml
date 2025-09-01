@@ -9,13 +9,12 @@ function switch_state(_new){
 	state = _new
 }
 
-layer = layer_get_id("UI")
 depth = LAYER_DEPTH_UI
 
 //Scribbe and text settings
 typist = scribble_typist();
 typist.in(1, 0);
-font_size = font_get_size(global.game_settings.font)
+font_size = 16 //font_get_size(global.game_settings.font)
 options_max = 3	//how many options max possible for the player
 
 //STRUCT system
@@ -85,9 +84,9 @@ function load_draw_vars(){
 	cam_y = camera_get_view_y(view_camera[0])
 	
 	//Textbox vars
-	sprite_textbox = spr_hushbox_template
+	sprite_textbox = dialog_box
 	tx_w = RES_W
-	tx_h = 64
+	tx_h = sprite_get_height(sprite_textbox)
 	tx_x_top = cam_x
 	tx_y_top = cam_y + RES_H - tx_h
 	hush_surf= new Canvas(tx_w, tx_h)
@@ -112,7 +111,7 @@ load_draw_vars()
 //TEST SCENE
 scene_array = 
 [
-	new hush_scene("Testste geiuert ergb oiregergre ergerger", , ,["glib", "glob", "glab"], [1, 2, 3]),
+	new hush_scene("Testste geiuert ergb oiregergre ergerger", "Crane", sprite_sera,["glib", "glob", "glab"], [1, 2, 3]),
 	new hush_scene("1 geiuert ergb oiregergre ergerger"),
 	new hush_scene("2 geiuert ergb oiregergre ergerger"),
 	new hush_scene("3 geiuert ergb oiregergre ergerger"),
